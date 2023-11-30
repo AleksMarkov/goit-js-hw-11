@@ -1,8 +1,10 @@
 import Notiflix from 'notiflix';
-import { lightbox } from './js/lightbox';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 import { searchImg } from './js/search-img';
 import { createMarkup } from './js/create-markup';
 
+let onlightbox = new SimpleLightbox('.img_wrap a');
 const refs = {
   gallery: document.querySelector('.gallery'),
   form: document.querySelector('#search-form'),
@@ -44,7 +46,7 @@ function onSubmit(event) {
       } else {
         Notiflix.Notify.info(`Found ${data.totalHits} results.`, param1);
         gallery.innerHTML = createMarkup(results);
-        lightbox.refresh();
+        onlightbox.refresh();
       }
       if (data.totalHits > perPage) {
         btn.classList.remove('hidden');
@@ -76,7 +78,7 @@ function clickLoadMore() {
         btn.removeEventListener('click', clickLoadMore);
         window.removeEventListener('scroll', nextPage);
       }
-      lightbox.refresh();
+      onlightbox.refresh();
     })
     .catch(onSearchError);
 }
